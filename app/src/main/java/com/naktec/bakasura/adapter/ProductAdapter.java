@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.naktec.bakasura.R;
+import com.naktec.bakasura.model.HotelDetail;
 
 /**
  * Created by Nakul on 11/14/2015.
@@ -20,24 +21,24 @@ public class ProductAdapter extends BaseAdapter {
     Activity con;
     Typeface cr;
     int layoutResID;
-    private String[] city;
     int pos;
     private Integer count;
+    HotelDetail mHotelDetail;
     // PreferenceManager mpref;
 
     public ProductAdapter(Activity context, int layoutResourceID,
-                            String[] cityList) {
+                            String[] cityList,HotelDetail hotelDetail) {
 
         con = context;
-        city = cityList;
         layoutResID = layoutResourceID;
+        mHotelDetail =hotelDetail;
         // this.cr=cr;
 
     }
 
     @Override
     public int getCount() {
-        return city.length;
+        return mHotelDetail.getMenuItem().size();
     }
 
     @Override
@@ -77,7 +78,7 @@ public class ProductAdapter extends BaseAdapter {
         itemHolder.mAddBtn = (TextView) view.findViewById(R.id.add_btn);
         itemHolder.mSubBtn = (TextView) view.findViewById(R.id.sub_btn);
         itemHolder.mSubBtn.setTag(position);
-        itemHolder.city.setText(city[position]);
+        itemHolder.city.setText(mHotelDetail.getMenuItem().get(position).getName());
         itemHolder.mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

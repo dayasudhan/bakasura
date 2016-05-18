@@ -10,19 +10,28 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.naktec.bakasura.R;
 import com.naktec.bakasura.adapter.ProductAdapter;
+import com.naktec.bakasura.model.HotelDetail;
 
 public class ProductDetailViewActivity extends AppCompatActivity {
     String[] hotel={"Dosa","Idli","Upma","Poori ","Prata","Vada","Goobi"};
+    HotelDetail hotelDetail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail_view);
+        Intent i = getIntent();
+        Gson gson = new Gson();
+        hotelDetail = gson.fromJson(i.getStringExtra("hotel"), HotelDetail.class);
+
         ProductAdapter dataAdapter = new ProductAdapter(ProductDetailViewActivity.this,
-                R.layout.product_detail_list_layout,hotel);
+                R.layout.product_detail_list_layout,hotel,hotelDetail);
         ListView listView = (ListView) findViewById(R.id.listView_product_detail);
         listView.setAdapter(dataAdapter);
+
+
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -47,7 +56,7 @@ public class ProductDetailViewActivity extends AppCompatActivity {
         TextView counttxt = (TextView) badgeLayout.findViewById(R.id.count_indicator);
        // counttxt.setVisibility(View.INVISIBLE);
         // updateHotCount(0);
-        counttxt.setText("2");
+        counttxt.setText("23");
         badgeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

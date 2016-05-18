@@ -15,11 +15,13 @@ import android.widget.Toast;
 import com.naktec.bakasura.R;
 import com.naktec.bakasura.adapter.LocationAdapter;
 
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -31,16 +33,20 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 public class LocationActivity extends AppCompatActivity {
-    String[] area={"kormangla","Vijaynagar","Hsr Layout","Btm Layout"};
 
+    private static final String TAG_SUBAREAS = "subAreas";
+    String[] areaCoverage={"kormangla","Vijaynagar","Hsr Layout","Btm Layout"};
+    private ArrayList<String> mCityCoverage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_location_search);
+        mCityCoverage =  new ArrayList<String>();
+        getCityCoverage();
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
         LocationAdapter dataAdapter = new LocationAdapter(LocationActivity.this,
-                R.layout.area_list,area);
+                R.layout.area_list,areaCoverage,mCityCoverage);
         ListView   listView = (ListView) findViewById(R.id.area_listView);
         listView.setAdapter(dataAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,22 +59,28 @@ public class LocationActivity extends AppCompatActivity {
         });
 
     }
+    //http://oota.herokuapp.com/v1/admin/coverageArea
+    public void getCityCoverage()
+    {
+        mCityCoverage.clear();
+        String order_url = "http://oota.herokuapp.com/v1/admin/coverageArea";
+        new JSONAsyncTask().execute(order_url);
+    }
     public  class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
 
         ProgressDialog dialog;
 
         ListView mListView;
         Activity mContex;
-        public  JSONAsyncTask(Activity contex,ListView gview)
+        public  JSONAsyncTask()
         {
-            this.mListView=gview;
-            this.mContex=contex;
+
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(mContex);
+            dialog = new ProgressDialog(LocationActivity.this);
             dialog.setMessage("Loading, please wait");
             dialog.setTitle("Connecting server");
             dialog.show();
@@ -96,19 +108,12 @@ public class LocationActivity extends AppCompatActivity {
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject object = jarray.getJSONObject(i);
 
-                        Order ordr = new Order();
-                        Customer cus = new Customer();
-                        if(object.has(TAG_CUSTOMER)) {
-                            JSONObject custObj = object.getJSONObject(TAG_CUSTOMER);
-                            if (custObj.has(TAG_PHONE)) {
-                                cus.setName(custObj.getString(TAG_NAME));
+                        if(object.has(TAG_SUBAREAS)) {
+                            JSONArray subAreasArray = object.getJSONArray(TAG_SUBAREAS);
+                            for (int j = 0; j < subAreasArray.length(); j++) {
+                                JSONObject city_object = subAreasArray.getJSONObject(j);
+                                mCityCoverage.add(city_object.get("name").toString());
                             }
-                            if (custObj.has(TAG_PHONE)) {
-                                int phone = custObj.getInt(TAG_PHONE);
-                                cus.setPhone(Integer.toString(phone));
-                            }
-                            ordr.setCustomer(cus);
-                            orderList.add(ordr);
                         }
                     }
                     return true;
@@ -125,9 +130,8 @@ public class LocationActivity extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
             dialog.cancel();
-            adapter.notifyDataSetChanged();
             if (result == false)
-                Toast.makeText(getActivity().getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
 
         }
     }

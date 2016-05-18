@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.naktec.bakasura.R;
+import com.naktec.bakasura.model.HotelDetail;
+
+import java.util.ArrayList;
 
 
 public class HotelListAdapter extends BaseAdapter{
@@ -16,14 +19,15 @@ public class HotelListAdapter extends BaseAdapter{
     Typeface cr;
     int layoutResID;
     private String[] city;
+    private ArrayList<HotelDetail> mhotelList;
     int pos;
     // PreferenceManager mpref;
 
     public HotelListAdapter(Activity context, int layoutResourceID,
-                           String[] cityList) {
+                            ArrayList<HotelDetail> hotelList) {
 
         con = context;
-        city = cityList;
+        mhotelList = hotelList;
         layoutResID = layoutResourceID;
         // this.cr=cr;
 
@@ -31,7 +35,7 @@ public class HotelListAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return city.length;
+        return mhotelList.size();
     }
 
     @Override
@@ -46,38 +50,35 @@ public class HotelListAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        CityItemHolder itemHolder;
+        HotelItemHolder itemHolder;
         View view = convertView;
         //  mpref= PreferenceManager.instance(con);
         //  LocationListNameModel city = getItem(position);
 
-        itemHolder = new CityItemHolder();
+        itemHolder = new HotelItemHolder();
         if(view==null){
             LayoutInflater inflater = ((Activity)con).getLayoutInflater();
             view = inflater.inflate(layoutResID, parent, false);
 
 
-            itemHolder = new CityItemHolder();
-            itemHolder.city= (TextView) view.findViewById(R.id.vendor_name);
+            itemHolder = new HotelItemHolder();
+            itemHolder.hotelName= (TextView) view.findViewById(R.id.vendor_name);
 
             view.setTag(itemHolder);
         }else{
-            itemHolder = (CityItemHolder) view.getTag();
+            itemHolder = (HotelItemHolder) view.getTag();
         }
 
         //   itemHolder.city.setTypeface(cr);
-        itemHolder.city.setText(city[position]);
-
-
-
+        itemHolder.hotelName.setText(mhotelList.get(position).getHotelItem().getName());
         return view;
 
     }
     /*public void update(List<LocationListNameModel> rowItems) {
         city=rowItems;
     }*/
-    private static class CityItemHolder {
-        TextView city;
+    private static class HotelItemHolder {
+        TextView hotelName;
 
 
     }

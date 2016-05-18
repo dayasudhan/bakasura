@@ -1,7 +1,11 @@
 package com.naktec.bakasura.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.ParseException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -13,25 +17,58 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.naktec.bakasura.R;
 import com.naktec.bakasura.adapter.HotelListAdapter;
+import com.naktec.bakasura.model.HotelDetail;
+import com.naktec.bakasura.model.MenuItem;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class HotelActivity extends AppCompatActivity {
-    String[] hotel={"A2b","Empire","Hsr Club","Vidyarthi Bhavan ","Udupi Garden","Halli Mane","SLV Dose Camp"};
+    private static final String TAG_ID = "_id";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_PRICE = "price";
+    private static final String TAG_EMAIL = "email";
+    private static final String TAG_ADDRESS = "address";
+    private static final String TAG_PHONE = "phone";
+    private static final String TAG_MENU = "menu";
+    private static final String TAG_HOTEL = "hotel";
+    private static final String TAG_SPECIALITY = "speciality";
+    private static final String TAG_DELIVERY_AREAS = "deliverAreas";
+    private static final String TAG_AVAILIBILITY = "availability";
 
+    private ArrayList<HotelDetail> hotellist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel);
+        hotellist =  new ArrayList<HotelDetail>();
+        getHotelList();
         HotelListAdapter dataAdapter = new HotelListAdapter(HotelActivity.this,
-                R.layout.hotel_list_item,hotel);
+                R.layout.hotel_list_item,hotellist);
         ListView listView = (ListView) findViewById(R.id.listView_vendor);
         listView.setAdapter(dataAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(HotelActivity.this, CategoriesActivity.class);
+                Intent i = new Intent(HotelActivity.this, ProductDetailViewActivity.class);
+                Gson gson = new Gson();
+                String hotel = gson.toJson(hotellist.get(position));
+                i.putExtra("hotel", hotel);
 
                 startActivity(i);
             }
@@ -46,7 +83,149 @@ public class HotelActivity extends AppCompatActivity {
         });
     }
 
+    //http://oota.herokuapp.com/v1/admin/coverageArea
+    public void getHotelList()
+    {
+        hotellist.clear();
+        String order_url = "http://oota.herokuapp.com/v1/vendor/city?city=Bangalore";
+        new JSONAsyncTask().execute(order_url);
+    }
+    public  class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
 
+        ProgressDialog dialog;
+
+        ListView mListView;
+        Activity mContex;
+
+        public JSONAsyncTask() {
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(HotelActivity.this);
+            dialog.setMessage("Loading, please wait");
+            dialog.setTitle("Connecting server");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... urls) {
+            try {
+
+                //------------------>>
+                HttpGet httppost = new HttpGet(urls[0]);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+
+                // StatusLine stat = response.getStatusLine();
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status == 200) {
+                    HttpEntity entity = response.getEntity();
+
+                    String data = EntityUtils.toString(entity);
+                    JSONArray jarray = new JSONArray(data);
+
+                    for (int i = 0; i < jarray.length(); i++) {
+                        JSONObject object = jarray.getJSONObject(i);
+                        HotelDetail hotelDetail = new HotelDetail();
+                        if (object.has(TAG_MENU)) {
+                            JSONArray menuArray = object.getJSONArray(TAG_MENU);
+                            hotelDetail.getMenuItem().clear();
+                            for (int j = 0; j < menuArray.length(); j++) {
+                                JSONObject menu_object = menuArray.getJSONObject(j);
+                                MenuItem menuItem = new MenuItem();
+                                if(menu_object.has(TAG_ID))
+                                    menuItem.setId(menu_object.getString(TAG_ID));
+                                if(menu_object.has(TAG_NAME))
+                                    menuItem.setName(menu_object.getString(TAG_NAME));
+                                String dd =menu_object.getString(TAG_PRICE);
+                                if(menu_object.has(TAG_PRICE) ) {
+                                    try {
+                                        menuItem.setPrice(menu_object.getInt(TAG_PRICE));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                if(menu_object.has(TAG_AVAILIBILITY)) {
+
+                                    try {
+                                        if(menu_object.getInt(TAG_AVAILIBILITY) == 1)
+                                            menuItem.setAvailable(true);
+                                        else
+                                            menuItem.setAvailable(false);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                hotelDetail.getMenuItem().add(menuItem);
+                            }
+                        }
+                        if(object.has(TAG_ID))
+                            hotelDetail.setId(object.getString(TAG_ID));
+                        if(object.has(TAG_SPECIALITY))
+                            hotelDetail.setSpeciality(object.getString(TAG_SPECIALITY));
+//                        if(object.has(TAG_DELIVERY_AREAS))
+//                            hotelDetail.setDeliveryAreas(object.getString(TAG_SPECIALITY));
+                        if(object.has(TAG_HOTEL))
+                        {
+                            JSONObject hotelObj = object.getJSONObject(TAG_HOTEL);
+                            if (hotelObj.has(TAG_NAME)) {
+                                hotelDetail.getHotelItem().setName(hotelObj.getString(TAG_NAME));
+                            }
+                            if (hotelObj.has(TAG_EMAIL)) {
+                                hotelDetail.getHotelItem().setEmail(hotelObj.getString(TAG_EMAIL));
+                            }
+                        }
+                        if (object.has(TAG_PHONE)) {
+                            int phone=0 ;
+                            try {
+                                phone = object.getInt(TAG_PHONE);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            hotelDetail.setPhone(new Integer(phone));
+                        }
+                        if (object.has(TAG_ADDRESS)) {
+                            JSONObject addrObj = object.getJSONObject(TAG_ADDRESS);
+                            if(addrObj.has("addressLine1"))
+                                hotelDetail.getAddress().setAddressLine1(addrObj.getString("addressLine1"));
+                            if(addrObj.has("addressLine2"))
+                                hotelDetail.getAddress().setAddressLine2(addrObj.getString("addressLine2"));
+                            if(addrObj.has("areaName"))
+                                hotelDetail.getAddress().setAreaName(addrObj.getString("areaName"));
+                            if(addrObj.has("city"))
+                                hotelDetail.getAddress().setCity(addrObj.getString("city"));
+                            if(addrObj.has("LandMark"))
+                                hotelDetail.getAddress().setLandMark(addrObj.getString("LandMark"));
+                            if(addrObj.has("street"))
+                                hotelDetail.getAddress().setStreet(addrObj.getString("street"));
+                            if(addrObj.has("street"))
+                                hotelDetail.getAddress().setZip(addrObj.getString("street"));
+                        }
+                        hotellist.add(hotelDetail);
+                    }
+                    return true;
+                }
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+        protected void onPostExecute(Boolean result) {
+            dialog.cancel();
+            if (result == false)
+                Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
+
+        }
+    }
     private void showAlertDialogForVendorFilter( ) {
 
 

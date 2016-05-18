@@ -17,7 +17,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         ProductAdapter dataAdapter = new ProductAdapter(CartActivity.this,
-                R.layout.product_detail_list_layout,hotel);
+                R.layout.product_detail_list_layout,hotel,null);
         ListView listView = (ListView) findViewById(R.id.listView_cart);
         listView.setAdapter(dataAdapter);
         Button btn= (Button) findViewById(R.id.orderDetailButton_next);

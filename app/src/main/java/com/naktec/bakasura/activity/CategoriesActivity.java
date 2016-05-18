@@ -18,7 +18,7 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         LocationAdapter dataAdapter = new LocationAdapter(CategoriesActivity.this,
-                R.layout.area_list,area);
+                R.layout.area_list,area,null);
         ListView listView = (ListView) findViewById(R.id.sub_product_listView);
         listView.setAdapter(dataAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

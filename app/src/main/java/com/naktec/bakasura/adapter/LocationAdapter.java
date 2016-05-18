@@ -11,28 +11,27 @@ import android.widget.TextView;
 
 import com.naktec.bakasura.R;
 
+import java.util.ArrayList;
+
 
 public class LocationAdapter extends BaseAdapter{
     Activity con;
     Typeface cr;
     int layoutResID;
-    private String[] city;
     int pos;
+    private ArrayList<String> mCityCoverage;
     // PreferenceManager mpref;
 
     public LocationAdapter(Activity context, int layoutResourceID,
-                           String[] cityList) {
-
-        con = context;
-        city = cityList;
+                           String[] cityList ,ArrayList<String> cityCoverage) {
+       con = context;
         layoutResID = layoutResourceID;
-       // this.cr=cr;
-
+        mCityCoverage = cityCoverage;
     }
 
     @Override
     public int getCount() {
-        return city.length;
+        return mCityCoverage.size();
     }
 
     @Override
@@ -67,7 +66,7 @@ public class LocationAdapter extends BaseAdapter{
         }
 
      //   itemHolder.city.setTypeface(cr);
-        itemHolder.city.setText(city[position]);
+        itemHolder.city.setText(mCityCoverage.get(position));
 
 
 
@@ -79,7 +78,5 @@ public class LocationAdapter extends BaseAdapter{
     }*/
     private static class CityItemHolder {
         TextView city;
-
-
     }
 }
