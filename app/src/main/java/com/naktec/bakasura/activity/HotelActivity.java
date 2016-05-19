@@ -188,6 +188,7 @@ public class HotelActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             hotelDetail.setPhone(new Integer(phone));
+                            hotelDetail.getHotelItem().setPhone(hotelDetail.getPhone());
                         }
                         if (object.has(TAG_ADDRESS)) {
                             JSONObject addrObj = object.getJSONObject(TAG_ADDRESS);

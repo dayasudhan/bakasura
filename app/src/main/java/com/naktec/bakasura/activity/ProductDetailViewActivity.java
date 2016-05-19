@@ -14,22 +14,39 @@ import com.google.gson.Gson;
 import com.naktec.bakasura.R;
 import com.naktec.bakasura.adapter.ProductAdapter;
 import com.naktec.bakasura.model.HotelDetail;
+import com.naktec.bakasura.model.MenuAdapter;
+import com.naktec.bakasura.model.MenuOrder;
+import com.naktec.bakasura.model.Order;
+
+import java.util.ArrayList;
 
 public class ProductDetailViewActivity extends AppCompatActivity {
-    String[] hotel={"Dosa","Idli","Upma","Poori ","Prata","Vada","Goobi"};
+
     HotelDetail hotelDetail;
+    Order order;
+    ArrayList<MenuAdapter> mMenulist;
+    ProductAdapter mDataAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail_view);
-        Intent i = getIntent();
-        Gson gson = new Gson();
-        hotelDetail = gson.fromJson(i.getStringExtra("hotel"), HotelDetail.class);
 
-        ProductAdapter dataAdapter = new ProductAdapter(ProductDetailViewActivity.this,
-                R.layout.product_detail_list_layout,hotel,hotelDetail);
+        order = new Order();
+        Intent intent = getIntent();
+        Gson gson = new Gson();
+        hotelDetail = gson.fromJson(intent.getStringExtra("hotel"), HotelDetail.class);
+        order.setHotelItem(hotelDetail.getHotelItem());
+        mMenulist = new ArrayList<MenuAdapter>();
+        for(int i = 0; i< hotelDetail.getMenuItem().size();i++)
+        {
+            MenuAdapter menuAdapter = new MenuAdapter( hotelDetail.getMenuItem().get(i));
+            mMenulist.add(menuAdapter);
+        }
+        mDataAdapter = new ProductAdapter(ProductDetailViewActivity.this,
+                R.layout.product_detail_list_layout,mMenulist);
+
         ListView listView = (ListView) findViewById(R.id.listView_product_detail);
-        listView.setAdapter(dataAdapter);
+        listView.setAdapter(mDataAdapter);
 
 
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,7 +92,16 @@ public class ProductDetailViewActivity extends AppCompatActivity {
                     }
                 }*/
                 Intent i = new Intent(ProductDetailViewActivity.this, CartActivity.class);
-
+                Gson gson = new Gson();
+                order.getMenuItems().clear();
+                for(int j = 0;  j <mDataAdapter.getmMenulist().size(); j++) {
+                    if(mDataAdapter.getmMenulist().get(j).getMenuOrder().getNo_of_order() > 0) {
+                        MenuOrder menu = mDataAdapter.getmMenulist().get(j).getMenuOrder();
+                        order.getMenuItems().add(menu);
+                    }
+                }
+                String strOrder = gson.toJson(order);
+                i.putExtra("order", strOrder);
                 startActivity(i);
             }
         });

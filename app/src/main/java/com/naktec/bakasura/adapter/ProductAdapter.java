@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.naktec.bakasura.R;
 import com.naktec.bakasura.model.HotelDetail;
+import com.naktec.bakasura.model.MenuAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by Nakul on 11/14/2015.
@@ -23,22 +26,31 @@ public class ProductAdapter extends BaseAdapter {
     int layoutResID;
     int pos;
     private Integer count;
-    HotelDetail mHotelDetail;
+
+    public ArrayList<MenuAdapter> getmMenulist() {
+        return mMenulist;
+    }
+
+    public void setmMenulist(ArrayList<MenuAdapter> mMenulist) {
+        this.mMenulist = mMenulist;
+    }
+
+    ArrayList<MenuAdapter> mMenulist;
     // PreferenceManager mpref;
 
     public ProductAdapter(Activity context, int layoutResourceID,
-                            String[] cityList,HotelDetail hotelDetail) {
+                          ArrayList<MenuAdapter> menuList) {
 
         con = context;
         layoutResID = layoutResourceID;
-        mHotelDetail =hotelDetail;
+        mMenulist =menuList;
         // this.cr=cr;
 
     }
 
     @Override
     public int getCount() {
-        return mHotelDetail.getMenuItem().size();
+        return mMenulist.size();
     }
 
     @Override
@@ -78,7 +90,10 @@ public class ProductAdapter extends BaseAdapter {
         itemHolder.mAddBtn = (TextView) view.findViewById(R.id.add_btn);
         itemHolder.mSubBtn = (TextView) view.findViewById(R.id.sub_btn);
         itemHolder.mSubBtn.setTag(position);
-        itemHolder.city.setText(mHotelDetail.getMenuItem().get(position).getName());
+        itemHolder.city.setText(mMenulist.get(position).getName());
+
+        itemHolder.mValue = (TextView) view.findViewById(R.id.add_sub_val);
+        itemHolder.mValue.setText(String.valueOf(mMenulist.get(position).getNo_of_order()));
         itemHolder.mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +115,7 @@ public class ProductAdapter extends BaseAdapter {
                 tiew.setText(sVal);
                 TextView btn = (TextView) parentRow.findViewById(R.id.add_btn);
                 btn.setTextColor(Color.parseColor("#07c2b1"));
+                mMenulist.get(posi).setNo_of_order(val);
                 /*String productname = textName.getText().toString();
                 int productID=  productList.get(posforadd).getVendorProduct().getId();
                 for(int j=0;j<=mProductModel.getSuccess().size();j++){
@@ -154,6 +170,7 @@ public class ProductAdapter extends BaseAdapter {
                     TextView addbtn = (TextView) parentRow.findViewById(R.id.add_btn);
                     addbtn.setTextColor(Color.parseColor("#8A8A8A"));
                     String productname = textName.getText().toString();
+                    mMenulist.get(posi).setNo_of_order(val);
                    /* int productID=  productList.get(posforsub).getVendorProduct().getId();
                         for(int j=0;j<=mProductModel.getSuccess().size();j++){
                             if(productID==mProductModel.getSuccess().get(j).getVendorProduct().getId()){
@@ -179,7 +196,7 @@ public class ProductAdapter extends BaseAdapter {
         city=rowItems;
     }*/
     private static class CityItemHolder {
-        TextView city,mAddBtn,mSubBtn;
+        TextView city,mAddBtn,mSubBtn,mValue;
 
 
     }

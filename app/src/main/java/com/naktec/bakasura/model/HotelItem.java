@@ -8,6 +8,7 @@ public class HotelItem {
     {
         name = new String();
         email = new String();
+        phone = new Integer(0);
     }
     public String getName() {
         return name;
@@ -25,6 +26,14 @@ public class HotelItem {
         this.email = email;
     }
 
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
     String name;
     String email;
+    Integer phone;
 }
