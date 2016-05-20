@@ -14,30 +14,80 @@ public class Order {
         this.customer = customer;
     }
 
-    public ArrayList<MenuOrder> getMenuItems() {
-        return menuItems;
+    public ArrayList<Menu> getMenuItems() {
+        return menu;
     }
 
-    public void setMenuItems(ArrayList<MenuOrder> menuItems) {
-        this.menuItems = menuItems;
+    public void setMenuItems(ArrayList<Menu> menuItems) {
+        this.menu = menuItems;
     }
 
-    public HotelItem getHotelItem() {
-        return hotelItem;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setHotelItem(HotelItem hotelItem) {
-        this.hotelItem = hotelItem;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+    public String get_id() {
+        return _id;
     }
 
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+    public int getBill_value() {
+        return bill_value;
+    }
+
+    public void setBill_value(int bill_value) {
+        this.bill_value = bill_value;
+        this.totalCost = bill_value + hotel.getDeliveryCharges();
+    }
+
+    public ArrayList<Menu> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(ArrayList<Menu> menu) {
+        this.menu = menu;
+    }
     Customer customer;
-    HotelItem hotelItem;
-    ArrayList<MenuOrder> menuItems;
+    Hotel hotel;
+    ArrayList<Menu> menu;
+    String _id;
+
+
+
+    int bill_value;
+
+    public int getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(int deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
+    }
+
+    public int getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    int deliveryCharge;
+    int totalCost;
     public Order()
     {
+        _id = new String();
         customer = new Customer();
-        hotelItem = new HotelItem();
-        menuItems = new ArrayList<MenuOrder>();
+        hotel = new Hotel();
+        menu = new ArrayList<Menu>();
+        bill_value = 0;
+        deliveryCharge = 0;
+        totalCost = 0;
     }
 
 }

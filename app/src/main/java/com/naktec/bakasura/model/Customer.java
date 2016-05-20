@@ -12,12 +12,12 @@ public class Customer {
         this.name = name;
     }
 
-    public String getPhone() {
+    public int getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        phone = phone;
+    public void setPhone(int phone) {
+       this.phone = phone;
     }
 
     public Address getAddress() {
@@ -36,16 +36,26 @@ public class Customer {
         this.email = email;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     String name;
-    String phone;
+    int phone;
     Address address;
     String email;
 
+
+
+    String id;
     public Customer()   {
         name = new String();
         email = new String();
-        phone = new String();
+        phone = 0;
         address = new Address();
+        id = new String();
     }
 }

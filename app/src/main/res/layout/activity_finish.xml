@@ -16,8 +16,8 @@
         android:gravity="center_horizontal|center_vertical"
         android:id="@+id/after_order_title"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
+
+        android:textColor="@color/heading_color"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_alignParentLeft="true"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/title_text_color"
             android:text="Order Id -"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
@@ -66,44 +66,19 @@
             android:text="#12456"
             android:id="@+id/order_id_value"
             android:textSize="16sp"
-            android:textColor="@color/title_text_color"
+            android:textColor="@color/secondary_text_color"
             android:layout_marginLeft="3dp"
             android:layout_alignBottom="@+id/order_id_text"
             android:layout_toRightOf="@+id/order_id_text"
             android:layout_toEndOf="@+id/order_id_text"
             android:layout_alignTop="@+id/order_id_text" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/secondary_text_color"
-            android:text="Bill Value -"
-            android:id="@+id/bill_value_text"
-
-            android:layout_alignBottom="@+id/order_id_value"
-            android:layout_toRightOf="@+id/order_id_value"
-            android:layout_toEndOf="@+id/order_id_value"
-            android:layout_marginLeft="20dp"
-            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/title_text_color"
-            android:text="Rs.10000"
-            android:id="@+id/bill_value_value"
-            android:layout_marginLeft="3dp"
-            android:layout_alignBottom="@+id/bill_value_text"
-            android:layout_toRightOf="@+id/bill_value_text"
-            android:layout_toEndOf="@+id/bill_value_text" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/secondary_text_color"
             android:text="Items -"
             android:id="@+id/items_text"
             android:layout_below="@+id/order_id_text"
@@ -115,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/title_text_color"
+            android:textColor="@color/secondary_text_color"
             android:text="Product 1 name ,product 2 name,product3 name"
             android:id="@+id/items_value"
             android:layout_marginLeft="3dp"
@@ -125,30 +100,57 @@
             android:layout_toEndOf="@+id/items_text"
             android:layout_toRightOf="@+id/items_text" />
 
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="@color/secondary_text_color"-->
+            <!--android:text="Order Time -"-->
+            <!--android:id="@+id/order_time_text"-->
+            <!--android:layout_below="@+id/items_value"-->
+            <!--android:layout_alignLeft="@+id/items_text"-->
+            <!--android:layout_alignStart="@+id/items_text"-->
+            <!--android:layout_marginTop="20dp" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="10:30"-->
+            <!--android:layout_marginLeft="3dp"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="@color/title_text_color"-->
+            <!--android:id="@+id/order_time_value"-->
+            <!--android:layout_alignTop="@+id/order_time_text"-->
+            <!--android:layout_toRightOf="@+id/order_time_text"-->
+            <!--android:layout_toEndOf="@+id/order_time_text" />-->
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/title_text_color"
+            android:text="Bill Value -"
+            android:id="@+id/bill_value_text"
+
+            android:layout_below="@+id/items_value"
+            android:layout_alignLeft="@+id/items_text"
+            android:layout_alignStart="@+id/items_text"
+            android:layout_marginTop="20dp" />
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/secondary_text_color"
-            android:text="Order Time -"
-            android:id="@+id/order_time_text"
-            android:layout_below="@+id/items_value"
-            android:layout_alignLeft="@+id/items_text"
-            android:layout_alignStart="@+id/items_text"
-            android:layout_marginTop="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="10:30"
+            android:text="Rs.10000"
+            android:id="@+id/bill_value_value"
             android:layout_marginLeft="3dp"
-            android:textSize="16sp"
-            android:textColor="@color/title_text_color"
-            android:id="@+id/order_time_value"
-            android:layout_alignTop="@+id/order_time_text"
-            android:layout_toRightOf="@+id/order_time_text"
-            android:layout_toEndOf="@+id/order_time_text" />
+            android:layout_alignBottom="@+id/bill_value_text"
+            android:layout_toRightOf="@+id/bill_value_text"
+            android:layout_toEndOf="@+id/bill_value_text" />
 
     </RelativeLayout>
     <RelativeLayout
@@ -171,7 +173,7 @@
             android:text="Address -"
             android:id="@+id/address_text"
             android:textSize="16sp"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/title_text_color"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             />
@@ -180,7 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/title_text_color"
+            android:textColor="@color/secondary_text_color"
             android:text="Address comes here /n fsdfsd dfgdf dfgdfgd dfgdfg dfgd dfg"
             android:id="@+id/address_value"
             android:layout_alignParentRight="true"
@@ -206,7 +208,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/title_text_color"
             android:text="Hotel -"
 
             android:id="@+id/vendor_name_text"
@@ -218,7 +220,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/title_text_color"
+            android:textColor="@color/secondary_text_color"
             android:text="Hotel name comes here"
             android:id="@+id/vendor_name_value"
             android:layout_marginLeft="3dp"
@@ -230,7 +232,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/secondary_text_color"
+            android:textColor="@color/title_text_color"
             android:text="Hotel Contact -"
             android:id="@+id/vendor_contact_text"
             android:layout_below="@+id/vendor_name_text"
@@ -242,7 +244,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/title_text_color"
+            android:textColor="@color/secondary_text_color"
             android:text="999999999"
             android:id="@+id/vendor_contact_value"
 

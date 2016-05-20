@@ -3,7 +3,6 @@ package com.naktec.bakasura.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
@@ -12,20 +11,22 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.naktec.bakasura.R;
+import com.naktec.bakasura.adapter.PlusMinusButtonListener;
 import com.naktec.bakasura.adapter.ProductAdapter;
 import com.naktec.bakasura.model.HotelDetail;
 import com.naktec.bakasura.model.MenuAdapter;
-import com.naktec.bakasura.model.MenuOrder;
+import com.naktec.bakasura.model.Menu;
 import com.naktec.bakasura.model.Order;
 
 import java.util.ArrayList;
 
-public class ProductDetailViewActivity extends AppCompatActivity {
+public class ProductDetailViewActivity extends AppCompatActivity implements PlusMinusButtonListener{
 
     HotelDetail hotelDetail;
     Order order;
     ArrayList<MenuAdapter> mMenulist;
     ProductAdapter mDataAdapter;
+    TextView counttxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class ProductDetailViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Gson gson = new Gson();
         hotelDetail = gson.fromJson(intent.getStringExtra("hotel"), HotelDetail.class);
-        order.setHotelItem(hotelDetail.getHotelItem());
+        order.setHotel(hotelDetail.getHotel());
         mMenulist = new ArrayList<MenuAdapter>();
         for(int i = 0; i< hotelDetail.getMenuItem().size();i++)
         {
@@ -44,7 +45,7 @@ public class ProductDetailViewActivity extends AppCompatActivity {
         }
         mDataAdapter = new ProductAdapter(ProductDetailViewActivity.this,
                 R.layout.product_detail_list_layout,mMenulist);
-
+        mDataAdapter.setListener(this);
         ListView listView = (ListView) findViewById(R.id.listView_product_detail);
         listView.setAdapter(mDataAdapter);
 
@@ -61,19 +62,23 @@ public class ProductDetailViewActivity extends AppCompatActivity {
 
 
     }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void buttonClicked(int postion,int value) {
+        int count = mDataAdapter.totalCount;
+        counttxt.setText(String.valueOf(count));
+    }
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
 
         menuInflater.inflate(R.menu.menu_product_detail_list, menu);
         //  menu_hotlist = menu.findItem(R.id.menu_hotlist).getActionView();
         // counttxt= (TextView) menu_hotlist.findViewById(R.id.hotlist_hot);
         RelativeLayout badgeLayout = (RelativeLayout) menu.findItem(R.id.menu_hotlist).getActionView();
-        TextView counttxt = (TextView) badgeLayout.findViewById(R.id.count_indicator);
-       // counttxt.setVisibility(View.INVISIBLE);
+        counttxt = (TextView) badgeLayout.findViewById(R.id.count_indicator);
+        //counttxt.setVisibility(View.INVISIBLE);
         // updateHotCount(0);
-        counttxt.setText("23");
+        counttxt.setText("0");
         badgeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +101,7 @@ public class ProductDetailViewActivity extends AppCompatActivity {
                 order.getMenuItems().clear();
                 for(int j = 0;  j <mDataAdapter.getmMenulist().size(); j++) {
                     if(mDataAdapter.getmMenulist().get(j).getMenuOrder().getNo_of_order() > 0) {
-                        MenuOrder menu = mDataAdapter.getmMenulist().get(j).getMenuOrder();
+                        Menu menu = mDataAdapter.getmMenulist().get(j).getMenuOrder();
                         order.getMenuItems().add(menu);
                     }
                 }

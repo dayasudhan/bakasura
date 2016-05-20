@@ -67,19 +67,19 @@ public class MenuAdapter {
         available = item.isAvailable();
         no_of_order = 0;
     }
-    public  MenuAdapter(MenuOrder item)
+    public  MenuAdapter(Menu item)
     {
         name = item.getName();
         no_of_order = item.getNo_of_order();
-        price =0;
+        price =item.getPrice();
         available = true;
     }
-    public MenuOrder getMenuOrder()
+    public Menu getMenuOrder()
     {
-        MenuOrder item = new MenuOrder();
+        Menu item = new Menu();
         item.no_of_order = this.no_of_order;
         item.name = this.name;
-
+        item.price = this.price;
         return item;
     }
 }

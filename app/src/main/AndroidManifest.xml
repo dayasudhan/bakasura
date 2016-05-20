@@ -13,9 +13,10 @@
         <activity
             android:name=".activity.LocationActivity"
             android:label="@string/title_activity_location_search"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".activity.HotelActivity" >
+        <activity android:name=".activity.HotelActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".activity.SplashActivity"
@@ -26,15 +27,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CategoriesActivity" >
+        <activity android:name=".activity.CategoriesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity android:name=".activity.ProductDetailViewActivity" >
         </activity>
-        <activity android:name=".activity.CartActivity" >
+        <activity android:name=".activity.CartActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activity.CutomerEnterDetailsActivity" >
+        <activity android:name=".activity.CutomerEnterDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activity.FinishActivity" >
+        <activity android:name=".activity.FinishActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

@@ -3,13 +3,15 @@ package com.naktec.bakasura.model;
 /**
  * Created by dganeshappa on 5/19/2016.
  */
-public class MenuOrder {
+public class Menu {
     String name;
     int  no_of_order;
-    public MenuOrder()
+    int  price;
+    public Menu()
     {
         name = new String();
         no_of_order = 0;
+        price  = 0;
     }
     public String getName() {
         return name;
@@ -25,5 +27,12 @@ public class MenuOrder {
 
     public void setNo_of_order(int no_of_order) {
         this.no_of_order = no_of_order;
+    }
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

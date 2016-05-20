@@ -14,24 +14,42 @@ public class HotelDetail {
     ArrayList<String> deliveryAreas;
     Address address;
     ArrayList<MenuItem> menuItem;
-    HotelItem hotelItem;
+    Hotel hotel;
     String speciality;
-
+    int rating;
+    int delivery_time;
 
     public HotelDetail()
     {
-        hotelItem = new HotelItem();
+        hotel = new Hotel();
 
         id = new String();
+
         address = new Address();
         menuItem = new ArrayList<MenuItem>();
         speciality = new String();
         deliveryAreas = new ArrayList<String>();
         deliveryRange = 3;
         phone = new Integer(0);
+        rating = 5;
+        delivery_time = 60;
     }
 
+    public int getDelivery_time() {
+        return delivery_time;
+    }
 
+    public void setDelivery_time(int delivery_time) {
+        this.delivery_time = delivery_time;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
     public ArrayList<MenuItem> getMenuItem() {
         return menuItem;
     }
@@ -73,12 +91,12 @@ public class HotelDetail {
         this.speciality = speciality;
     }
 
-    public HotelItem getHotelItem() {
-        return hotelItem;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setHotelItem(HotelItem hotelItem) {
-        this.hotelItem = hotelItem;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public Address getAddress() {

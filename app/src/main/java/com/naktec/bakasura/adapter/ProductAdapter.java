@@ -26,7 +26,8 @@ public class ProductAdapter extends BaseAdapter {
     int layoutResID;
     int pos;
     private Integer count;
-
+    public int totalCount ;
+    PlusMinusButtonListener mListener;
     public ArrayList<MenuAdapter> getmMenulist() {
         return mMenulist;
     }
@@ -44,10 +45,14 @@ public class ProductAdapter extends BaseAdapter {
         con = context;
         layoutResID = layoutResourceID;
         mMenulist =menuList;
+        totalCount = 0;
         // this.cr=cr;
 
     }
-
+    public void setListener(PlusMinusButtonListener listener)
+    {
+        mListener = listener;
+    }
     @Override
     public int getCount() {
         return mMenulist.size();
@@ -78,6 +83,7 @@ public class ProductAdapter extends BaseAdapter {
 
             itemHolder = new CityItemHolder();
             itemHolder.city= (TextView) view.findViewById(R.id.product_detail_name);
+            itemHolder.price_value = (TextView) view.findViewById(R.id.approx_price_val);
 
             view.setTag(itemHolder);
         }else{
@@ -91,12 +97,14 @@ public class ProductAdapter extends BaseAdapter {
         itemHolder.mSubBtn = (TextView) view.findViewById(R.id.sub_btn);
         itemHolder.mSubBtn.setTag(position);
         itemHolder.city.setText(mMenulist.get(position).getName());
+        itemHolder.price_value.setText(new String("₹ ").concat(String.valueOf(mMenulist.get(position).getPrice())));
 
         itemHolder.mValue = (TextView) view.findViewById(R.id.add_sub_val);
         itemHolder.mValue.setText(String.valueOf(mMenulist.get(position).getNo_of_order()));
         itemHolder.mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                totalCount =  totalCount + 1;
                 v.getTag();
                 int posi = (Integer) v.getTag();
                 View parentRow = (View) v.getParent();
@@ -116,6 +124,7 @@ public class ProductAdapter extends BaseAdapter {
                 TextView btn = (TextView) parentRow.findViewById(R.id.add_btn);
                 btn.setTextColor(Color.parseColor("#07c2b1"));
                 mMenulist.get(posi).setNo_of_order(val);
+                mListener.buttonClicked(pos,val);
                 /*String productname = textName.getText().toString();
                 int productID=  productList.get(posforadd).getVendorProduct().getId();
                 for(int j=0;j<=mProductModel.getSuccess().size();j++){
@@ -161,6 +170,7 @@ public class ProductAdapter extends BaseAdapter {
                 count = new Integer(quantity);
                 Log.e("sub" + count, "^^^^^^^");
                 if (count > 0) {
+                    totalCount =  totalCount - 1;
                     int val = count - 1;
                     // Toast.makeText(getApplicationContext(),""+val,Toast.LENGTH_LONG).show();
                     String sVal = "" + val;
@@ -171,6 +181,7 @@ public class ProductAdapter extends BaseAdapter {
                     addbtn.setTextColor(Color.parseColor("#8A8A8A"));
                     String productname = textName.getText().toString();
                     mMenulist.get(posi).setNo_of_order(val);
+                    mListener.buttonClicked(pos,val);
                    /* int productID=  productList.get(posforsub).getVendorProduct().getId();
                         for(int j=0;j<=mProductModel.getSuccess().size();j++){
                             if(productID==mProductModel.getSuccess().get(j).getVendorProduct().getId()){
@@ -187,8 +198,6 @@ public class ProductAdapter extends BaseAdapter {
             }
         });
 
-
-
         return view;
 
     }
@@ -196,8 +205,6 @@ public class ProductAdapter extends BaseAdapter {
         city=rowItems;
     }*/
     private static class CityItemHolder {
-        TextView city,mAddBtn,mSubBtn,mValue;
-
-
-    }
+        TextView city,mAddBtn,mSubBtn,mValue,price_value;
+   }
 }

@@ -32,6 +32,7 @@ public class MenuItem {
     String name;
     String id;
     boolean available;
+    int  no_of_order;
 
     public boolean isAvailable() {
         return available;
@@ -40,12 +41,18 @@ public class MenuItem {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
+    public int getNo_of_order() {
+        return no_of_order;
+    }
+    public void setNo_of_order(int no_of_order) {
+        this.no_of_order = no_of_order;
+    }
     public MenuItem()
     {
         name = new String();
         id = new String();
         available = true;
+        no_of_order = 0;
 
     }
 }

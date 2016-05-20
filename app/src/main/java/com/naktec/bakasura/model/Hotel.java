@@ -3,12 +3,13 @@ package com.naktec.bakasura.model;
 /**
  * Created by dganeshappa on 5/18/2016.
  */
-public class HotelItem {
-    public HotelItem()
+public class Hotel {
+    public Hotel()
     {
         name = new String();
         email = new String();
         phone = new Integer(0);
+        deliveryCharges = 0;
     }
     public String getName() {
         return name;
@@ -36,4 +37,14 @@ public class HotelItem {
     String name;
     String email;
     Integer phone;
+
+    public int getDeliveryCharges() {
+        return deliveryCharges;
+    }
+
+    public void setDeliveryCharges(int deliveryCharges) {
+        this.deliveryCharges = deliveryCharges;
+    }
+
+    int deliveryCharges;
 }
