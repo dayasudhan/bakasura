@@ -44,6 +44,21 @@ public class Order {
         this.bill_value = bill_value;
         this.totalCost = bill_value + hotel.getDeliveryCharges();
     }
+    public int getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(int deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
+    }
+
+    public int getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
+    }
 
     public ArrayList<Menu> getMenu() {
         return menu;
@@ -61,21 +76,6 @@ public class Order {
 
     int bill_value;
 
-    public int getDeliveryCharge() {
-        return deliveryCharge;
-    }
-
-    public void setDeliveryCharge(int deliveryCharge) {
-        this.deliveryCharge = deliveryCharge;
-    }
-
-    public int getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(int totalCost) {
-        this.totalCost = totalCost;
-    }
 
     int deliveryCharge;
     int totalCost;

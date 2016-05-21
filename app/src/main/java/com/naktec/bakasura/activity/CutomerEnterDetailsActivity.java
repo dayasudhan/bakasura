@@ -42,7 +42,7 @@ public class CutomerEnterDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Gson gson = new Gson();
         order = gson.fromJson(intent.getStringExtra("order"), Order.class);
-
+        responseOrder = new String();
         Button btn= (Button) findViewById(R.id.placeOrderButton);
         editName=(EditText)findViewById(R.id.orderDetailName);
         editPhone=(EditText)findViewById(R.id.orderDetailPhone);
@@ -52,23 +52,42 @@ public class CutomerEnterDetailsActivity extends AppCompatActivity {
         editLandmark=(EditText)findViewById(R.id.orderDetailAddress_landmark);
         TextView orderTotalCharge = (TextView) findViewById(R.id.textView);
         orderTotalCharge.setText(String.valueOf(order.getBill_value()));
-
+        if(true) {
+            editName.setText("name");
+            editPhone.setText("9566229075");
+            editEmail.setText("hjgjhgj");
+            editAreaName.setText("areaname");
+            editLandmark.setText("landmark");
+            editHouseNo.setText("houseno");
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 order.getCustomer().setName(editName.getText().toString());
-                order.getCustomer().setPhone(Integer.parseInt(editPhone.getText().toString()));
+
                 order.getCustomer().setEmail(editEmail.getText().toString());
                 order.getCustomer().getAddress().setAreaName(editAreaName.getText().toString());
                 order.getCustomer().getAddress().setLandMark(editLandmark.getText().toString());
                 order.getCustomer().getAddress().setAddressLine1(editHouseNo.getText().toString());
-                Gson gson = new Gson();
-                String strOrder = gson.toJson(order);
-                postOrder(strOrder);
+                if (validatePhoneNumber(editPhone.getText().toString())) {
+                    order.getCustomer().setPhone(editPhone.getText().toString());
+                    Gson gson = new Gson();
+                    String strOrder = gson.toJson(order);
+                    postOrder(strOrder);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Enter Valid Phone Number ", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
+    }
+    private static boolean validatePhoneNumber(String phoneNo)
+    {
+        if (phoneNo.matches("\\d{10}"))
+            return true;
+        else if(phoneNo.matches("\\+\\d{12}")) return true;
+        else return false;
     }
     public void postOrder(String order)
     {
@@ -87,7 +106,7 @@ public class CutomerEnterDetailsActivity extends AppCompatActivity {
             super.onPreExecute();
             dialog = new ProgressDialog(CutomerEnterDetailsActivity.this);
             dialog.setMessage("Posting Order, please wait");
-            dialog.setTitle("Connecting server");
+            dialog.setTitle("Connecting....");
             dialog.show();
             dialog.setCancelable(false);
         }

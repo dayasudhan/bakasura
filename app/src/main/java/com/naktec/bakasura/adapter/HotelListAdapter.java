@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.naktec.bakasura.R;
@@ -22,7 +21,7 @@ public class HotelListAdapter extends BaseAdapter{
     private String[] city;
     private ArrayList<HotelDetail> mhotelList;
     int pos;
-    RatingBar ratingbar1;
+
     // PreferenceManager mpref;
 
     public HotelListAdapter(Activity context, int layoutResourceID,
@@ -65,7 +64,7 @@ public class HotelListAdapter extends BaseAdapter{
 
             itemHolder = new HotelItemHolder();
             itemHolder.hotelName= (TextView) view.findViewById(R.id.vendor_name);
-            itemHolder.hotelDeliveryCharge= (TextView) view.findViewById(R.id.vendor_delivery_time);
+            itemHolder.hotelDeliveryTime= (TextView) view.findViewById(R.id.vendor_delivery_time);
             itemHolder.hotelRating= (TextView) view.findViewById(R.id.vendor_rating);
             itemHolder.hotelSpeciality= (TextView) view.findViewById(R.id.vendor_speciality);
 //            ratingbar1=(RatingBar)view.findViewById(R.id.ratingBar1);
@@ -78,7 +77,7 @@ public class HotelListAdapter extends BaseAdapter{
 
         //   itemHolder.city.setTypeface(cr);
         itemHolder.hotelName.setText(mhotelList.get(position).getHotel().getName());
-        itemHolder.hotelDeliveryCharge.setText(String.valueOf(mhotelList.get(position).getDelivery_time()).concat(" mins"));
+        itemHolder.hotelDeliveryTime.setText(String.valueOf(mhotelList.get(position).getDelivery_time()).concat(" mins"));
         itemHolder.hotelRating.setText(String.valueOf(mhotelList.get(position).getRating()).concat("/5*"));
         itemHolder.hotelSpeciality.setText(mhotelList.get(position).getSpeciality());
         return view;

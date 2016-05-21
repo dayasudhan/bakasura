@@ -53,7 +53,7 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(LocationActivity.this,HotelActivity.class);
-
+                i.putExtra("area", mCityCoverage.get(position));
                 startActivity(i);
             }
         });

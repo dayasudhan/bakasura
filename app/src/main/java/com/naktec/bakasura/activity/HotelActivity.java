@@ -55,12 +55,16 @@ public class HotelActivity extends AppCompatActivity {
     private static final String TAG_DELIVERY_TIME = "deliverTime";
     private static final String TAG_RATING = "rating";
     private ArrayList<HotelDetail> hotellist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel);
         hotellist =  new ArrayList<HotelDetail>();
-        getHotelList();
+        Intent intent = getIntent();
+        String areaClicked = new String(intent.getStringExtra("area"));
+
+        getHotelList(areaClicked);
         HotelListAdapter dataAdapter = new HotelListAdapter(HotelActivity.this,
                 R.layout.hotel_list_item,hotellist);
         ListView listView = (ListView) findViewById(R.id.listView_vendor);
@@ -72,7 +76,6 @@ public class HotelActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String hotel = gson.toJson(hotellist.get(position));
                 i.putExtra("hotel", hotel);
-
                 startActivity(i);
             }
         });
@@ -87,10 +90,13 @@ public class HotelActivity extends AppCompatActivity {
     }
 
     //http://oota.herokuapp.com/v1/admin/coverageArea
-    public void getHotelList()
+    public void getHotelList(String areaClicked)
     {
         hotellist.clear();
-        String order_url = "http://oota.herokuapp.com/v1/vendor/city?city=Bangalore";
+      //  String order_url = "http://oota.herokuapp.com/v1/vendor/city?city=Bangalore";
+        //String order_url = "http://oota.herokuapp.com/v1/vendor/area?areaName=";
+        String order_url = "http://oota.herokuapp.com/v1/vendor/delieveryareas?areaName=";
+        order_url = order_url + areaClicked;
         new JSONAsyncTask().execute(order_url);
     }
     public  class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {

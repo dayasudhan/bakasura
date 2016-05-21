@@ -51,6 +51,7 @@
         android:layout_below="@+id/view"
         android:layout_marginTop="17dp"
         android:textColorHint="@color/third_text_color"
+        android:textColor="@color/secondary_text_color"
         android:background="#ffffff"
         android:layout_alignRight="@+id/view"
         android:layout_marginLeft="10dp"
@@ -74,7 +75,7 @@
         android:textColorHint="@color/third_text_color"
         android:ems="10"
         android:layout_marginTop="18dp"
-
+        android:textColor="@color/secondary_text_color"
         android:background="#ffffff"
         android:id="@+id/orderDetailPhone"
         android:layout_below="@+id/orderDetailName"
@@ -102,6 +103,7 @@
         android:background="#ffffff"
         android:layout_below="@+id/orderDetailPhone"
         android:layout_marginLeft="10dp"
+        android:textColor="@color/secondary_text_color"
         android:layout_alignRight="@+id/orderDetailPhone"
         android:layout_marginTop="18dp"
         android:layout_alignParentLeft="true" />
@@ -129,6 +131,7 @@
         android:layout_marginLeft="10dp"
         android:layout_alignRight="@+id/orderDetailAddress_house_no"
         android:layout_marginTop="18dp"
+        android:textColor="@color/secondary_text_color"
         android:layout_alignParentLeft="true" />
 
     <View
@@ -154,6 +157,7 @@
         android:layout_marginLeft="10dp"
         android:layout_alignRight="@+id/orderDetailAddress_areaname"
         android:layout_marginTop="18dp"
+        android:textColor="@color/secondary_text_color"
         android:layout_alignParentLeft="true" />
 
     <View
@@ -162,6 +166,7 @@
         android:background="@color/view_color"
         android:layout_below="@+id/orderDetailAddress_landmark"
         android:layout_marginLeft="10dp"
+
         android:layout_alignRight="@+id/orderMapSymbol"
         android:layout_marginTop="7dp"
         />
@@ -177,6 +182,7 @@
         android:inputType="textEmailAddress"
         android:textSize="15sp"
         android:hint="Enter Email"
+        android:textColor="@color/secondary_text_color"
         android:textColorHint="@color/third_text_color"
         android:background="#ffffff"
         android:layout_below="@+id/orderDetailAddress_landmark"
@@ -362,7 +368,8 @@
         android:background="@color/colorAccent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:clickable="true" />
 
     <TextView
         android:layout_width="wrap_content"

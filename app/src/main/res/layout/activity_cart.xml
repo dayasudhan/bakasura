@@ -154,12 +154,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView_cart"
         android:layout_above="@+id/view3"
-        android:divider="@color/background_color"
-        android:dividerHeight="5dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:divider="#F7F7F7"
+        android:clickable="true"
+        android:drawSelectorOnTop="false"
+        android:dividerHeight="5dp"
         android:layout_below="@+id/vendor_add_cart_name" />
 
 
