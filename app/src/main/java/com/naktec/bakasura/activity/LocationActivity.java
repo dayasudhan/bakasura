@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -43,8 +45,7 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.content_location_search);
         mCityCoverage =  new ArrayList<String>();
         getCityCoverage();
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+
         LocationAdapter dataAdapter = new LocationAdapter(LocationActivity.this,
                 R.layout.area_list,areaCoverage,mCityCoverage);
         ListView   listView = (ListView) findViewById(R.id.area_listView);
@@ -57,7 +58,16 @@ public class LocationActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        setToolBar();
+    }
+    private void setToolBar() {
+        Toolbar tb = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(tb);
 
+        ActionBar ab = getSupportActionBar();
+//        ab.setHomeAsUpIndicator(R.drawable.ic_action_search);
+//        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setTitle("KHAANAVALI");
     }
     //http://oota.herokuapp.com/v1/admin/coverageArea
     public void getCityCoverage()

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.naktec.bakasura.R;
@@ -96,18 +97,24 @@ public class ProductDetailViewActivity extends AppCompatActivity implements Plus
                         startActivity(gotoSetCart);
                     }
                 }*/
-                Intent i = new Intent(ProductDetailViewActivity.this, CartActivity.class);
-                Gson gson = new Gson();
-                order.getMenuItems().clear();
-                for(int j = 0;  j <mDataAdapter.getmMenulist().size(); j++) {
-                    if(mDataAdapter.getmMenulist().get(j).getMenuOrder().getNo_of_order() > 0) {
-                        Menu menu = mDataAdapter.getmMenulist().get(j).getMenuOrder();
-                        order.getMenuItems().add(menu);
-                    }
+                if(mDataAdapter.totalCount <= 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Cart Empty -please select Some Items", Toast.LENGTH_LONG).show();
                 }
-                String strOrder = gson.toJson(order);
-                i.putExtra("order", strOrder);
-                startActivity(i);
+                else {
+                    Intent i = new Intent(ProductDetailViewActivity.this, CartActivity.class);
+                    Gson gson = new Gson();
+                    order.getMenuItems().clear();
+                    for (int j = 0; j < mDataAdapter.getmMenulist().size(); j++) {
+                        if (mDataAdapter.getmMenulist().get(j).getMenuOrder().getNo_of_order() > 0) {
+                            Menu menu = mDataAdapter.getmMenulist().get(j).getMenuOrder();
+                            order.getMenuItems().add(menu);
+                        }
+                    }
+                    String strOrder = gson.toJson(order);
+                    i.putExtra("order", strOrder);
+                    startActivity(i);
+                }
             }
         });
         /*new MyMenuItemStuffListener(menu_hotlist, "Show hot message") {

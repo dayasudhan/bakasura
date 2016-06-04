@@ -40,6 +40,7 @@ import java.util.ArrayList;
 
 public class HotelActivity extends AppCompatActivity {
     private static final String TAG_ID = "_id";
+    private static final String TAG_ID2 = "id";
     private static final String TAG_NAME = "name";
     private static final String TAG_PRICE = "price";
     private static final String TAG_EMAIL = "email";
@@ -187,6 +188,9 @@ public class HotelActivity extends AppCompatActivity {
                             }
                             if (hotelObj.has(TAG_EMAIL)) {
                                 hotelDetail.getHotel().setEmail(hotelObj.getString(TAG_EMAIL));
+                            }
+                            if (hotelObj.has(TAG_ID2)) {
+                                hotelDetail.getHotel().setId(hotelObj.getString(TAG_ID2));
                             }
                         }
                         if (object.has(TAG_PHONE)) {

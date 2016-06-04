@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.naktec.bakasura.R;
@@ -58,7 +59,7 @@ public class CartActivity extends AppCompatActivity implements PlusMinusButtonLi
         vendor_name.setText(order.getHotel().getName());
 
         deliveryCharge.setText(String.valueOf(order.getHotel().getDeliveryCharges()));
-        orderTotalCharge.setText(String.valueOf(order.getBill_value()));
+        orderTotalCharge.setText(String.valueOf(order.getTotalCost()));
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +73,18 @@ public class CartActivity extends AppCompatActivity implements PlusMinusButtonLi
 //                    }
 //                }
 //                order.setBill_value(total);
-                Intent i = new Intent(CartActivity.this, CutomerEnterDetailsActivity.class);
-                Gson gson = new Gson();
-                String strOrder = gson.toJson(order);
-                i.putExtra("order", strOrder);
-                startActivity(i);
+                if(order.getTotalCost() <= 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Cart Empty -please select Some Items", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent i = new Intent(CartActivity.this, CutomerEnterDetailsActivity.class);
+                    Gson gson = new Gson();
+
+                    String strOrder = gson.toJson(order);
+                    i.putExtra("order", strOrder);
+                    startActivity(i);
+                }
             }
         });
     }

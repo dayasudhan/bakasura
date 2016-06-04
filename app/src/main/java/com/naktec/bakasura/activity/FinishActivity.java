@@ -33,7 +33,7 @@ public class FinishActivity extends AppCompatActivity {
 
         txtViewName.setText(order.getHotel().getName());
         txtViewPhone.setText(String.valueOf(order.getHotel().getPhone()));
-        txtViewOrderId.setText(order.get_id());
+        txtViewOrderId.setText(order.getId());
 
         txtViewBillValue.setText(String.valueOf(order.getBill_value()));
         ArrayList<Menu> items = order.getMenuItems();

@@ -72,6 +72,15 @@ public class Order {
     ArrayList<Menu> menu;
     String _id;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    String id;
 
 
     int bill_value;
@@ -82,6 +91,7 @@ public class Order {
     public Order()
     {
         _id = new String();
+        id = new String();
         customer = new Customer();
         hotel = new Hotel();
         menu = new ArrayList<Menu>();

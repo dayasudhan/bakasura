@@ -181,7 +181,7 @@
         android:id="@+id/orderDetailEmail"
         android:inputType="textEmailAddress"
         android:textSize="15sp"
-        android:hint="Enter Email"
+        android:hint="Enter City"
         android:textColor="@color/secondary_text_color"
         android:textColorHint="@color/third_text_color"
         android:background="#ffffff"
@@ -400,6 +400,16 @@
         android:layout_below="@+id/timme_date"
         android:layout_alignLeft="@+id/timme_date"
         android:layout_alignStart="@+id/timme_date" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Current Location"
+        android:id="@+id/locationButton"
+        android:layout_below="@+id/orderMapSymbol"
+        android:layout_alignRight="@+id/view7"
+        android:layout_alignEnd="@+id/view7" />
 
 
 </RelativeLayout>
